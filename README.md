@@ -279,7 +279,43 @@ API_PREFIX=/api/v1
    docker-compose up --scale app=3
    ```
 
-### Cloud Deployment (Render.com)
+### Cloud Deployment (Railway)
+
+1. **Connect to Railway**
+   ```bash
+   # Install Railway CLI
+   npm install -g @railway/cli
+   
+   # Login to Railway
+   railway login
+   ```
+
+2. **Deploy to Railway**
+   ```bash
+   # Initialize Railway project
+   railway init
+   
+   # Deploy your application
+   railway up
+   ```
+
+3. **Set Environment Variables**
+   In Railway dashboard, add these environment variables:
+   - `DATABASE_URL`: Your PostgreSQL connection string
+   - `NODE_ENV`: `production`
+   - `PORT`: Railway will set this automatically
+   - `LOG_LEVEL`: `info`
+   - `CORS_ORIGIN`: `*`
+
+4. **Database Setup**
+   ```bash
+   # Run database migrations
+   railway run npx prisma db push
+   ```
+
+**Live Demo**: [Your Railway URL will appear here after deployment]
+
+### Alternative: Render.com Deployment
 
 1. Connect your GitHub repository to Render
 2. Create a new Web Service
@@ -288,8 +324,6 @@ API_PREFIX=/api/v1
    - **Start Command**: `npm start`
 4. Add environment variables in Render dashboard
 5. Deploy!
-
-**Live Demo**: [Your deployed URL here]
 
 ### Database Migration
 

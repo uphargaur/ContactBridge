@@ -1,10 +1,10 @@
 {
-  "name": "bitespeed-identity-reconciliation",
+  "name": "contactbridge",
   "version": "1.0.0",
   "description": "Identity reconciliation service for linking customer contacts across multiple purchases",
   "main": "dist/app.js",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && prisma generate",
     "start": "node dist/app.js",
     "dev": "nodemon src/app.ts",
     "test": "jest",
