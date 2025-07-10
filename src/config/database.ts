@@ -6,6 +6,16 @@ class DatabaseConnection {
   private prisma: PrismaClient;
 
   private constructor() {
+    // Validate DATABASE_URL environment variable
+    if (!process.env['DATABASE_URL']) {
+      logger.error('DATABASE_URL environment variable is not set');
+      throw new Error('DATABASE_URL environment variable is required');
+    }
+
+    logger.info('Initializing database connection with DATABASE_URL:', {
+      url: process.env['DATABASE_URL'].replace(/:[^:@]*@/, ':****@') // Hide password in logs
+    });
+
     this.prisma = new PrismaClient({
       log: [
         {
