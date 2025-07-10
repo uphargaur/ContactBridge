@@ -1,0 +1,81 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: bitespeed-postgres
+    environment:
+      POSTGRES_DB: bitespeed_db
+      POSTGRES_USER: bitespeed_user
+      POSTGRES_PASSWORD: bitespeed_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./prisma/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bitespeed_user -d bitespeed_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Application
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: bitespeed-app
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://bitespeed_user:bitespeed_password@postgres:5432/bitespeed_db
+      NODE_ENV: production
+      PORT: 3000
+      LOG_LEVEL: info
+      CORS_ORIGIN: "*"
+      API_PREFIX: /api/v1
+    ports:
+      - "3000:3000"
+    volumes:
+      - app_logs:/app/logs
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    restart: unless-stopped
+
+  # Development service (alternative to app)
+  app-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: bitespeed-app-dev
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://bitespeed_user:bitespeed_password@postgres:5432/bitespeed_db
+      NODE_ENV: development
+      PORT: 3000
+      LOG_LEVEL: debug
+      CORS_ORIGIN: "*"
+      API_PREFIX: /api/v1
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - app_logs:/app/logs
+    command: npm run dev
+    profiles:
+      - dev
+
+volumes:
+  postgres_data:
+    driver: local
+  app_logs:
+    driver: local 

@@ -1,0 +1,29 @@
+FROM node:18-alpine
+
+# Install dumb-init for proper signal handling
+RUN apk add --no-cache dumb-init
+
+# Set working directory
+WORKDIR /app
+
+# Copy package files
+COPY package*.json ./
+
+# Install all dependencies (including dev dependencies)
+RUN npm install
+
+# Copy source code
+COPY . .
+
+# Generate Prisma client
+RUN npx prisma generate
+
+# Create logs directory
+RUN mkdir -p logs
+
+# Expose port
+EXPOSE 3000
+
+# Start the application in development mode
+ENTRYPOINT ["dumb-init", "--"]
+CMD ["npm", "run", "dev"] 
