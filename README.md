@@ -91,7 +91,7 @@ The service will be available at `http://localhost:3000`
 
 ### Base URL
 ```
-Production: https://your-deployed-app.com
+Production: https://contactbridge-production.up.railway.app
 Development: http://localhost:3000
 ```
 
@@ -159,7 +159,16 @@ Returns the complete contact chain for a given contact ID.
 
 ### Creating a New Contact
 ```bash
+# Local Development
 curl -X POST http://localhost:3000/api/v1/identify \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "lorraine@hillvalley.edu",
+    "phoneNumber": "123456"
+  }'
+
+# Production
+curl -X POST https://contactbridge-production.up.railway.app/api/v1/identify \
   -H "Content-Type: application/json" \
   -d '{
     "email": "lorraine@hillvalley.edu",
@@ -181,7 +190,16 @@ curl -X POST http://localhost:3000/api/v1/identify \
 
 ### Linking Existing Contact
 ```bash
+# Local Development
 curl -X POST http://localhost:3000/api/v1/identify \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "mcfly@hillvalley.edu",
+    "phoneNumber": "123456"
+  }'
+
+# Production
+curl -X POST https://contactbridge-production.up.railway.app/api/v1/identify \
   -H "Content-Type: application/json" \
   -d '{
     "email": "mcfly@hillvalley.edu",
@@ -203,7 +221,16 @@ curl -X POST http://localhost:3000/api/v1/identify \
 
 ### Merging Separate Contact Groups
 ```bash
+# Local Development
 curl -X POST http://localhost:3000/api/v1/identify \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "george@hillvalley.edu",
+    "phoneNumber": "717171"
+  }'
+
+# Production
+curl -X POST https://contactbridge-production.up.railway.app/api/v1/identify \
   -H "Content-Type: application/json" \
   -d '{
     "email": "george@hillvalley.edu",
@@ -214,6 +241,18 @@ curl -X POST http://localhost:3000/api/v1/identify \
 This will merge two previously separate primary contacts into a single chain.
 
 ## 🧪 Testing
+
+### Quick API Test
+Test your deployed API:
+```bash
+# Health Check
+curl https://contactbridge-production.up.railway.app/health
+
+# Test Identify Endpoint
+curl -X POST https://contactbridge-production.up.railway.app/api/v1/identify \
+  -H "Content-Type: application/json" \
+  -d '{"email": "test@example.com", "phoneNumber": "1234567890"}'
+```
 
 ### Run Tests
 ```bash
@@ -313,7 +352,7 @@ API_PREFIX=/api/v1
    railway run npx prisma db push
    ```
 
-**Live Demo**: [Your Railway URL will appear here after deployment]
+**Live Demo**: [https://contactbridge-production.up.railway.app](https://contactbridge-production.up.railway.app)
 
 ### Alternative: Render.com Deployment
 
@@ -419,10 +458,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🔗 Links
 
-- **Live Demo**: [Your deployed URL]
-- **API Documentation**: [Postman Collection or Swagger]
-- **Issues**: [GitHub Issues]
-- **Contact**: [Your contact information]
+- **Live Demo**: [https://contactbridge-production.up.railway.app](https://contactbridge-production.up.railway.app)
+- **Health Check**: [https://contactbridge-production.up.railway.app/health](https://contactbridge-production.up.railway.app/health)
+- **API Base URL**: [https://contactbridge-production.up.railway.app/api/v1](https://contactbridge-production.up.railway.app/api/v1)
+- **GitHub Repository**: [https://github.com/uphargaur/ContactBridge](https://github.com/uphargaur/ContactBridge)
 
 ---
 
