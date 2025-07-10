@@ -49,11 +49,14 @@ class ConfigManager {
   }
 
   private validateConfig(): void {
-    const requiredEnvVars = ['DATABASE_URL'];
-    const missingVars = requiredEnvVars.filter(varName => !process.env[varName as keyof NodeJS.ProcessEnv]);
+    // Only require DATABASE_URL in production
+    if (this.config.nodeEnv === 'production') {
+      const requiredEnvVars = ['DATABASE_URL'];
+      const missingVars = requiredEnvVars.filter(varName => !process.env[varName as keyof NodeJS.ProcessEnv]);
 
-    if (missingVars.length > 0) {
-      throw new Error(`Missing required environment variables: ${missingVars.join(', ')}`);
+      if (missingVars.length > 0) {
+        throw new Error(`Missing required environment variables: ${missingVars.join(', ')}`);
+      }
     }
 
     if (this.config.port < 1 || this.config.port > 65535) {

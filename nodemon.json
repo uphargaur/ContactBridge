@@ -4,6 +4,7 @@
   "ignore": ["src/**/*.spec.ts", "src/**/*.test.ts"],
   "exec": "ts-node --transpile-only src/app.ts",
   "env": {
-    "NODE_ENV": "development"
+    "NODE_ENV": "development",
+    "DATABASE_URL": "postgresql://bitespeed_user:bitespeed_password@localhost:5432/bitespeed_db"
   }
 } 
