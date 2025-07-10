@@ -12,11 +12,23 @@ class DatabaseConnection {
       throw new Error('DATABASE_URL environment variable is required');
     }
 
+    // Check if we're in Railway and use Railway PostgreSQL URL if local URL is detected
+    let databaseUrl = process.env['DATABASE_URL'];
+    if (databaseUrl.includes('localhost:5432') || databaseUrl.includes('bitespeed_user')) {
+      logger.warn('Local database URL detected, switching to Railway PostgreSQL');
+      databaseUrl = 'postgresql://postgres:NNQKMWkwEMPYmmhXVZKobxUUxJVqfJMr@switchyard.proxy.rlwy.net:15003/railway';
+    }
+
     logger.info('Initializing database connection with DATABASE_URL:', {
-      url: process.env['DATABASE_URL'].replace(/:[^:@]*@/, ':****@') // Hide password in logs
+      url: databaseUrl.replace(/:[^:@]*@/, ':****@') // Hide password in logs
     });
 
     this.prisma = new PrismaClient({
+      datasources: {
+        db: {
+          url: databaseUrl
+        }
+      },
       log: [
         {
           emit: 'event',
