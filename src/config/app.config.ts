@@ -10,12 +10,12 @@ class ConfigManager {
 
   private constructor() {
     this.config = {
-      port: parseInt(process.env.PORT || '3000', 10),
-      nodeEnv: (process.env.NODE_ENV as Environment) || 'development',
-      databaseUrl: process.env.DATABASE_URL || 'postgresql://localhost:5432/bitespeed_db',
-      logLevel: process.env.LOG_LEVEL || 'info',
-      corsOrigin: process.env.CORS_ORIGIN || '*',
-      apiPrefix: process.env.API_PREFIX || '/api/v1'
+      port: parseInt(process.env['PORT'] || '3000', 10),
+      nodeEnv: (process.env['NODE_ENV'] as Environment) || 'development',
+      databaseUrl: process.env['DATABASE_URL'] || 'postgresql://localhost:5432/bitespeed_db',
+      logLevel: process.env['LOG_LEVEL'] || 'info',
+      corsOrigin: process.env['CORS_ORIGIN'] || '*',
+      apiPrefix: process.env['API_PREFIX'] || '/api/v1'
     };
 
     this.validateConfig();
@@ -50,7 +50,7 @@ class ConfigManager {
 
   private validateConfig(): void {
     const requiredEnvVars = ['DATABASE_URL'];
-    const missingVars = requiredEnvVars.filter(varName => !process.env[varName]);
+    const missingVars = requiredEnvVars.filter(varName => !process.env[varName as keyof NodeJS.ProcessEnv]);
 
     if (missingVars.length > 0) {
       throw new Error(`Missing required environment variables: ${missingVars.join(', ')}`);

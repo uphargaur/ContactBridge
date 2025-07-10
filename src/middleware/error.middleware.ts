@@ -6,7 +6,7 @@ export const errorHandler = (
   error: any,
   req: Request,
   res: Response,
-  next: NextFunction
+  _next: NextFunction
 ): void => {
   logger.error('Error occurred:', {
     error: error.message,
@@ -24,7 +24,7 @@ export const errorHandler = (
       statusCode: 500,
       timestamp: new Date().toISOString(),
       path: req.path,
-      code: error.code
+      code: error.code || 'UNKNOWN'
     };
     res.status(500).json(dbError);
     return;

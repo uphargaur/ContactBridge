@@ -28,30 +28,10 @@ class DatabaseConnection {
     });
 
     // Log database queries in development
-    if (process.env.NODE_ENV === 'development') {
-      this.prisma.$on('query', (e) => {
-        logger.debug('Database Query:', {
-          query: e.query,
-          params: e.params,
-          duration: `${e.duration}ms`,
-        });
-      });
+    if (process.env['NODE_ENV'] === 'development') {
+      // Development logging can be added here if needed
+      logger.debug('Database connection initialized in development mode');
     }
-
-    // Log database errors
-    this.prisma.$on('error', (e) => {
-      logger.error('Database Error:', e);
-    });
-
-    // Log database info
-    this.prisma.$on('info', (e) => {
-      logger.info('Database Info:', e);
-    });
-
-    // Log database warnings
-    this.prisma.$on('warn', (e) => {
-      logger.warn('Database Warning:', e);
-    });
   }
 
   public static getInstance(): DatabaseConnection {

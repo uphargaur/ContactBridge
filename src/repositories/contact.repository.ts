@@ -90,8 +90,8 @@ export class ContactRepository implements IContactRepository {
       const contact = await this.prisma.contact.update({
         where: { id },
         data: {
-          linkedId: updateData.linkedId,
-          linkPrecedence: updateData.linkPrecedence,
+          ...(updateData.linkedId !== undefined && { linkedId: updateData.linkedId }),
+          ...(updateData.linkPrecedence !== undefined && { linkPrecedence: updateData.linkPrecedence }),
           updatedAt: updateData.updatedAt || new Date()
         }
       });
@@ -209,8 +209,8 @@ export class ContactRepository implements IContactRepository {
           const contact = await tx.contact.update({
             where: { id: update.id },
             data: {
-              linkedId: update.data.linkedId,
-              linkPrecedence: update.data.linkPrecedence,
+              ...(update.data.linkedId !== undefined && { linkedId: update.data.linkedId }),
+              ...(update.data.linkPrecedence !== undefined && { linkPrecedence: update.data.linkPrecedence }),
               updatedAt: update.data.updatedAt || new Date()
             }
           });
