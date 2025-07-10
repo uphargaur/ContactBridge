@@ -25,6 +25,21 @@ A robust Node.js TypeScript service for linking customer identities across multi
 - [Architecture](#-architecture)
 - [Contributing](#-contributing)
 
+
+## TESTING 
+
+<img width="1209" height="522" alt="image" src="https://github.com/user-attachments/assets/77c2638c-1f64-40e7-926c-f8e6ec7bed09" />
+
+First
+
+<img width="1212" height="539" alt="image" src="https://github.com/user-attachments/assets/17eac5c5-ca97-439a-bad3-33bcee6b89f0" />
+
+Second
+
+<img width="1216" height="559" alt="image" src="https://github.com/user-attachments/assets/fd42252b-9df8-4bd4-8c0b-f4aae9f31096" />
+
+
+
 ## 🛠 Installation
 
 ### Prerequisites
@@ -465,4 +480,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-Made with ❤️ for Bitespeed Assignment 
+Made with ❤️  
