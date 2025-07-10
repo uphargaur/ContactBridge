@@ -50,6 +50,9 @@ COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
 COPY --from=builder /app/prisma ./prisma
 
+# Set Railway DATABASE_URL as default
+ENV DATABASE_URL="postgresql://postgres:NNQKMWkwEMPYmmhXVZKobxUUxJVqfJMr@switchyard.proxy.rlwy.net:15003/railway"
+
 # Create logs directory
 RUN mkdir -p logs && chown -R appuser:appgroup logs
 
